@@ -14,7 +14,6 @@ import com.vk.api.sdk.queries.users.UsersGetQuery;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VkService {
     private final VkApiClient client;
@@ -70,10 +69,10 @@ public class VkService {
         return getUserQuery;
     }
 
-    public List<String> getFriendIds(Integer userId) {
+    public List<Integer> getFriendIds(Integer userId) {
         try {
             GetResponse response = prepareGetFriendsQuery().userId(userId).execute();
-            return response.getItems().stream().map(Object::toString).collect(Collectors.toList());
+            return response.getItems();
         } catch (ApiException | ClientException e) {
             return Collections.emptyList();
         }
