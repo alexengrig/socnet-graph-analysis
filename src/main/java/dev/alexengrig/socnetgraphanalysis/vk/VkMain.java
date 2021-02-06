@@ -13,7 +13,17 @@ import java.util.concurrent.TimeUnit;
 public class VkMain {
 
     public static final String FIRST_USER_ID = "0";
+    /**
+     * App ID.
+     * <p>
+     * &lt;a href="https://vk.com/apps?act=manage"&gt;Manage app | Settings&lt;/a&gt;.
+     */
     public static final int APP_ID = 0;
+    /**
+     * Service token.
+     * <p>
+     * &lt;a href="https://vk.com/apps?act=manage"&gt;Manage app | Settings&lt;/a&gt;.
+     */
     public static final String APP_TOKEN = "0";
     public static final VkService vk = new VkService(APP_ID, APP_TOKEN);
     public static final ForkJoinPool pool = new ForkJoinPool(16);
