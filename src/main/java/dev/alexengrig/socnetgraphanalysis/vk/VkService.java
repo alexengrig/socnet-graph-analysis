@@ -13,7 +13,9 @@ import com.vk.api.sdk.queries.users.UsersGetFollowersQuery;
 import com.vk.api.sdk.queries.users.UsersGetQuery;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class VkService {
     private final VkApiClient client;
@@ -29,12 +31,12 @@ public class VkService {
         actor = new ServiceActor(appId, appToken);
     }
 
-    public List<Integer> getFollowerIds(Integer userId) {
+    public Set<Integer> getFollowerIds(Integer userId) {
         try {
             GetFollowersResponse response = prepareGetFollowersQuery().userId(userId).execute();
-            return response.getItems();
+            return new HashSet<>(response.getItems());
         } catch (ApiException | ClientException e) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
 
@@ -69,12 +71,12 @@ public class VkService {
         return getUserQuery;
     }
 
-    public List<Integer> getFriendIds(Integer userId) {
+    public Set<Integer> getFriendsIds(Integer userId) {
         try {
             GetResponse response = prepareGetFriendsQuery().userId(userId).execute();
-            return response.getItems();
+            return new HashSet<>(response.getItems());
         } catch (ApiException | ClientException e) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
 
