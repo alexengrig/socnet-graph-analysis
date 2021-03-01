@@ -19,8 +19,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Mono<Person> createById(Integer personId) {
-        Person person = new Person();
-        person.setId(personId);
+        Person person = Person.builder().id(personId).build();
         return personRepository.save(person);
     }
 }
