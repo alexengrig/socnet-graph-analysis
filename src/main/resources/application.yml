@@ -13,3 +13,7 @@ logging:
       springframework:
         data:
           neo4j: DEBUG
+application:
+  vk:
+    app-id:
+    access-token:

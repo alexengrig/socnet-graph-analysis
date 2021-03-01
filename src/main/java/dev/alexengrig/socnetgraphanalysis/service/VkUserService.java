@@ -1,0 +1,13 @@
+package dev.alexengrig.socnetgraphanalysis.service;
+
+import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface VkUserService {
+
+    Optional<VkUser> getUserById(Integer vkUserId);
+
+    List<VkUser> getUserFriendsById(Integer vkUserId);
+}

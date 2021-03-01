@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "application.vk.app-id",
+      "type": "java.lang.String",
+      "description": "Application id for VK-SDK."
+    },
+    {
+      "name": "application.vk.access-token",
+      "type": "java.lang.String",
+      "description": "Access token for VK-SDK."
+    }
+  ]
+}
