@@ -34,7 +34,9 @@ dependencies {
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    implementation "com.vk.api:sdk:${vkSdkVersion}"
+    implementation("com.vk.api:sdk:${vkSdkVersion}") {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    }
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

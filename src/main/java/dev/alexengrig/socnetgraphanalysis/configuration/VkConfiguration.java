@@ -24,9 +24,9 @@ public class VkConfiguration {
     }
 
     @Bean
-    public ServiceActor serviceActor(@Value("application.vk.app-id") Integer appId,
-                                     @Value("application.vk.access-token") String accessToken) {
-        return new ServiceActor(appId, accessToken);
+    public ServiceActor serviceActor(@Value("${application.vk.app-id}") String appId,
+                                     @Value("${application.vk.access-token}") String accessToken) {
+        return new ServiceActor(Integer.valueOf(appId), accessToken);
     }
 
     /* Queries */

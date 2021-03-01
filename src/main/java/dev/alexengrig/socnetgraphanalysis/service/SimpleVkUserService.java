@@ -30,8 +30,14 @@ public class SimpleVkUserService implements VkUserService {
     @Override
     public Optional<VkUser> getUserById(Integer vkUserId) {
         Objects.requireNonNull(vkUserId, "Vk user id must not be null");
+        return getUserById(vkUserId.toString());
+    }
+
+    @Override
+    public Optional<VkUser> getUserById(String vkUserId) {
+        Objects.requireNonNull(vkUserId, "Vk user id must not be null");
         try {
-            var users = usersGetQuery.userIds(vkUserId.toString()).execute();
+            var users = usersGetQuery.userIds(vkUserId).execute();
             if (users.size() == 1) {
                 var user = users.get(0);
                 VkUser convertedUser = conversionService.convert(user, VkUser.class);
