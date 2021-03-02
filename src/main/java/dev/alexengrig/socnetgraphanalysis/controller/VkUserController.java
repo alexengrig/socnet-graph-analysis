@@ -3,7 +3,7 @@ package dev.alexengrig.socnetgraphanalysis.controller;
 
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import dev.alexengrig.socnetgraphanalysis.exception.VkUserNotFoundException;
-import dev.alexengrig.socnetgraphanalysis.service.VkUserService;
+import dev.alexengrig.socnetgraphanalysis.service.vk.VkUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
