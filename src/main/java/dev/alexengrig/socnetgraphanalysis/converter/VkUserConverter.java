@@ -17,6 +17,7 @@ public class VkUserConverter implements Converter<GetResponse, VkUser> {
                 .firstName(source.getFirstName())
                 .lastName(source.getLastName())
                 .birthday(source.getBdate())
+                .audiosCount(source.getCounters().getAudios())
                 .build();
     }
 }
