@@ -21,6 +21,7 @@ public class Man {
 
     private String userId;
     private String name;
+    private boolean accessed;
 
     private Integer audiosCount;
 }

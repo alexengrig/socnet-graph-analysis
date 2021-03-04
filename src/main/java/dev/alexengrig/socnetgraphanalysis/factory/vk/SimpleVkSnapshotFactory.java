@@ -24,8 +24,9 @@ public class SimpleVkSnapshotFactory implements VkSnapshotFactory {
                 .map(vkUser -> Person.builder()
                         .userId(vkUser.getId().toString())
                         .name(vkUser.getFirstName() + " " + vkUser.getLastName())
-                        .friends(getUserFriendsByUserId(vkUser.getId()))
+                        .accessed(vkUser.isAccessed())
                         .audiosCount(vkUser.getAudiosCount())
+                        .friends(getUserFriendsByUserId(vkUser.getId()))
                         .build())
                 .map(person -> Snapshot.builder()
                         .person(person)
@@ -38,6 +39,7 @@ public class SimpleVkSnapshotFactory implements VkSnapshotFactory {
                 .map(vkUser -> Man.builder()
                         .userId(vkUser.getId().toString())
                         .name(vkUser.getFirstName() + " " + vkUser.getLastName())
+                        .accessed(vkUser.isAccessed())
                         .audiosCount(vkUser.getAudiosCount())
                         .build())
                 .collect(Collectors.toList());

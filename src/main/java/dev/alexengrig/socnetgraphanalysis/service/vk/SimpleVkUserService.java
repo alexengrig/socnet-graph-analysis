@@ -3,6 +3,7 @@ package dev.alexengrig.socnetgraphanalysis.service.vk;
 import com.vk.api.sdk.client.ApiRequest;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
+import com.vk.api.sdk.objects.users.Fields;
 import com.vk.api.sdk.objects.users.UserFull;
 import com.vk.api.sdk.queries.friends.FriendsGetQuery;
 import com.vk.api.sdk.queries.users.UsersGetQuery;
@@ -38,7 +39,7 @@ public class SimpleVkUserService implements VkUserService {
     @Override
     public Optional<VkUser> getUserById(String vkUserId) {
         Objects.requireNonNull(vkUserId, "Vk user id must not be null");
-        var query = this.usersGetQuery.userIds(vkUserId);
+        var query = this.usersGetQuery.userIds(vkUserId).fields(Fields.COUNTERS);
         var users = execute(query, () -> "getting user by id: " + vkUserId);
         if (users.size() == 1) {
             var user = users.get(0);
