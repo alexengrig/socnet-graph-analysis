@@ -39,11 +39,11 @@ public class SimpleVkUserService implements VkUserService {
     @Override
     public Optional<VkUser> getUserById(String vkUserId) {
         Objects.requireNonNull(vkUserId, "Vk user id must not be null");
-        var query = this.usersGetQuery.userIds(vkUserId).fields(Fields.COUNTERS);
+        var query = this.usersGetQuery.userIds(vkUserId).fields(Fields.COUNTERS, Fields.BDATE);
         var users = execute(query, () -> "getting user by id: " + vkUserId);
         if (users.size() == 1) {
             var user = users.get(0);
-            VkUser convertedUser = conversionService.convert(user, VkUser.class);
+            var convertedUser = conversionService.convert(user, VkUser.class);
             return Optional.ofNullable(convertedUser);
         } else if (users.isEmpty()) {
             return Optional.empty();

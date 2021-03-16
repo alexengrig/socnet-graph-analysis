@@ -11,6 +11,8 @@ public class VkUser {
     private String lastName;
     private String birthday;
 
+    private Integer age;
+
     private boolean accessed;
 
     private Integer audiosCount;

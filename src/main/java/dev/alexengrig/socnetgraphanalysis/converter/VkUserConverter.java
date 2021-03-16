@@ -7,32 +7,41 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
 @Component
 public class VkUserConverter implements Converter<GetResponse, VkUser> {
 
+    private static final DateTimeFormatter BIRTHDAY_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
+
     @NonNull
     @Override
     public VkUser convert(GetResponse source) {
-        VkUser.VkUserBuilder builder = VkUser.builder()
+        return VkUser.builder()
                 .id(source.getId())
                 .firstName(source.getFirstName())
                 .lastName(source.getLastName())
-                .birthday(source.getBdate());
-        if (hasNoAccess(source)) {
-            return builder.build();
-        }
-        return builder
-                .accessed(true)
+                .birthday(source.getBdate())
+                .age(getAge(source.getBdate()))
+                .accessed(hasAccess(source))
                 .audiosCount(getCounter(source.getCounters(), UserCounters::getAudios))
                 .build();
     }
 
-    private boolean hasNoAccess(GetResponse source) {
-        return "deleted".equals(source.getDeactivated()) || "banned".equals(source.getDeactivated())
-                || (source.getIsClosed() != null && source.getIsClosed()
-                && source.getCanAccessClosed() != null && source.getCanAccessClosed());
+    private Integer getAge(String birthday) {
+        if (birthday == null || birthday.length() < 8) {
+            return 0;
+        }
+        LocalDate date = LocalDate.parse(birthday, BIRTHDAY_FORMATTER);
+        return LocalDate.now().getYear() - date.getYear();
+    }
+
+    private boolean hasAccess(GetResponse source) {
+        return !"deleted".equals(source.getDeactivated()) && !"banned".equals(source.getDeactivated())
+                && (source.getIsClosed() == null || !source.getIsClosed()
+                || (source.getCanAccessClosed() != null && !source.getCanAccessClosed()));
     }
 
     private Integer getCounter(UserCounters counters, Function<UserCounters, Integer> getter) {
