@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="SocnetGraphAnalysisApplication" type="SpringBootApplicationConfigurationType"
+                   factoryName="Spring Boot">
+        <module name="socnet-graph-analysis.main"/>
+        <option name="SPRING_BOOT_MAIN_CLASS"
+                value="dev.alexengrig.socnetgraphanalysis.SocnetGraphAnalysisApplication"/>
+        <option name="ALTERNATIVE_JRE_PATH"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
+</component>
