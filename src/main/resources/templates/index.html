@@ -11,8 +11,11 @@
 <body>
 <div>
     <h1>Socnet-graph-analysis</h1>
-    <label for="vkUserId">Vk user id: </label>
-    <input id="vkUserId"/>
+    <form action="#" method="post" th:action="@{/clustering}" th:object="${condition}">
+        <label for="vkUserId">Vk user id: </label>
+        <input id="vkUserId" th:field="*{vkUserId}"/>
+        <input type="submit"/>
+    </form>
 </div>
 </body>
 </html>
