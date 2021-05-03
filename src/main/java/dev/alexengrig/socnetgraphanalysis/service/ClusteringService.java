@@ -6,7 +6,6 @@ import dev.alexengrig.socnetgraphanalysis.clustering.KMeans;
 import dev.alexengrig.socnetgraphanalysis.clustering.Record;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import dev.alexengrig.socnetgraphanalysis.model.Parent;
-import dev.alexengrig.socnetgraphanalysis.service.vk.VkUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;

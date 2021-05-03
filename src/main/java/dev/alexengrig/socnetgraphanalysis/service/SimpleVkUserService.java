@@ -1,4 +1,4 @@
-package dev.alexengrig.socnetgraphanalysis.service.vk;
+package dev.alexengrig.socnetgraphanalysis.service;
 
 import com.vk.api.sdk.client.ApiRequest;
 import com.vk.api.sdk.exceptions.ApiException;

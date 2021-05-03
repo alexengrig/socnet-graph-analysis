@@ -1,4 +1,4 @@
-package dev.alexengrig.socnetgraphanalysis.service.vk;
+package dev.alexengrig.socnetgraphanalysis.service;
 
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 
