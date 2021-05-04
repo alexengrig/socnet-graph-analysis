@@ -10,16 +10,17 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class ClusterConverter implements Converter<Map<ClusterCentroid, List<ClusterRecord>>, Parent> {
+public class ClusterConverter implements Converter<Map<ClusterCentroid, Set<ClusterRecord>>, Parent> {
 
     @Override
-    public Parent convert(Map<ClusterCentroid, List<ClusterRecord>> source) {
+    public Parent convert(Map<ClusterCentroid, Set<ClusterRecord>> source) {
         List<Node> target = new ArrayList<>(source.size());
         int i = 1;
-        for (Map.Entry<ClusterCentroid, List<ClusterRecord>> entry : source.entrySet()) {
+        for (Map.Entry<ClusterCentroid, Set<ClusterRecord>> entry : source.entrySet()) {
             String name = "Cluster " + i++;
             List<Node> children = entry.getValue().stream()
                     .map(record -> new Node(record.getLabel()))

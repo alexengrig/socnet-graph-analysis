@@ -1,7 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.service;
 
 import dev.alexengrig.socnetgraphanalysis.clustering.EuclideanDistance;
-import dev.alexengrig.socnetgraphanalysis.clustering.KMeans;
+import dev.alexengrig.socnetgraphanalysis.clustering.KMeansAlgorithm;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterCentroid;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,10 +29,14 @@ public class ClusteringService {
         List<VkUser> users = new ArrayList<>(1 + friends.size());
         users.add(user);
         users.addAll(friends);
-        List<ClusterRecord> records = users.stream()
+        Set<ClusterRecord> records = users.stream()
                 .map(u -> conversionService.convert(u, ClusterRecord.class))
-                .collect(Collectors.toList());
-        Map<ClusterCentroid, List<ClusterRecord>> clusters = KMeans.fit(records, 5, new EuclideanDistance(), 100);
+                .collect(Collectors.toSet());
+        KMeansAlgorithm kMeansAlgorithm = KMeansAlgorithm.builder()
+                .distance(new EuclideanDistance())
+                .numberOfClusters(5)
+                .build();
+        Map<ClusterCentroid, Set<ClusterRecord>> clusters = kMeansAlgorithm.apply(records);
         return conversionService.convert(clusters, Parent.class);
     }
 }
