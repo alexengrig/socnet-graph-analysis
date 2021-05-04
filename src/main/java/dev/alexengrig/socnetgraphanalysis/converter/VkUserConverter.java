@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.function.Function;
 
 @Component
@@ -61,7 +62,7 @@ public class VkUserConverter implements Converter<GetResponse, VkUser> {
             return 0;
         }
         LocalDate date = LocalDate.parse(birthday, BIRTHDAY_FORMATTER);
-        return LocalDate.now().getYear() - date.getYear();
+        return (int) ChronoUnit.YEARS.between(date, LocalDate.now());
     }
 
     private boolean hasAccess(GetResponse source) {
