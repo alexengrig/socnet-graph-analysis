@@ -24,7 +24,6 @@ repositories {
 }
 
 ext {
-    set('testcontainersVersion', "1.15.2")
     set('vkSdkVersion', "1.0.8")
 }
 
