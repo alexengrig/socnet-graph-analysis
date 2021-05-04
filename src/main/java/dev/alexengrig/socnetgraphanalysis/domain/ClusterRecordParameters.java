@@ -1,6 +1,5 @@
 package dev.alexengrig.socnetgraphanalysis.domain;
 
-import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 
@@ -10,7 +9,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 @Value
-@Builder
 public class ClusterRecordParameters {
 
     @Singular("parameter")
