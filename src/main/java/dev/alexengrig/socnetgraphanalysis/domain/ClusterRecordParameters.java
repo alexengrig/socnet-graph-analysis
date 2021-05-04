@@ -1,4 +1,4 @@
-package dev.alexengrig.socnetgraphanalysis.clustering;
+package dev.alexengrig.socnetgraphanalysis.domain;
 
 import lombok.Builder;
 import lombok.Singular;
@@ -11,12 +11,12 @@ import java.util.function.Function;
 
 @Value
 @Builder
-public class Parameters {
+public class ClusterRecordParameters {
 
     @Singular("parameter")
     Map<String, Double> map;
 
-    public boolean like(Parameters other) {
+    public boolean like(ClusterRecordParameters other) {
         if (map.size() != other.map.size()) {
             return false;
         }

@@ -1,9 +1,11 @@
 package dev.alexengrig.socnetgraphanalysis.clustering;
 
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
+
 public class EuclideanDistance implements Distance {
 
     @Override
-    public double calculate(Parameters left, Parameters right) {
+    public double calculate(ClusterRecordParameters left, ClusterRecordParameters right) {
         if (!left.like(right)) {
             throw new IllegalArgumentException("Different parameters: " + left + " and " + right);
         }

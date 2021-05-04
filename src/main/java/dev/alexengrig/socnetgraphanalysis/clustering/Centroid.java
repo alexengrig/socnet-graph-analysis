@@ -1,5 +1,6 @@
 package dev.alexengrig.socnetgraphanalysis.clustering;
 
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,5 +8,5 @@ import lombok.Data;
 @Builder
 public class Centroid {
 
-    private final Parameters coordinates;
+    private final ClusterRecordParameters coordinates;
 }

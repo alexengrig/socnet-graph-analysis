@@ -1,6 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.clustering;
 
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,23 +19,23 @@ public class KMeans {
     public static void main(String[] args) {
         List<ClusterRecord> target = Arrays.asList(ClusterRecord.builder()
                         .label("Record #1")
-                        .parameters(new Parameters(Map.of("Sex", 1d, "Age", 20d)))
+                        .parameters(ClusterRecordParameters.builder().map(Map.of("Sex", 1d, "Age", 20d)).build())
                         .build(),
                 ClusterRecord.builder()
                         .label("Record #2")
-                        .parameters(new Parameters(Map.of("Sex", 0d, "Age", 40d)))
+                        .parameters(ClusterRecordParameters.builder().map(Map.of("Sex", 0d, "Age", 40d)).build())
                         .build(),
                 ClusterRecord.builder()
                         .label("Record #3")
-                        .parameters(new Parameters(Map.of("Sex", 1d, "Age", 30d)))
+                        .parameters(ClusterRecordParameters.builder().map(Map.of("Sex", 1d, "Age", 30d)).build())
                         .build(),
                 ClusterRecord.builder()
                         .label("Record #4")
-                        .parameters(new Parameters(Map.of("Sex", 1d, "Age", 15d)))
+                        .parameters(ClusterRecordParameters.builder().map(Map.of("Sex", 1d, "Age", 15d)).build())
                         .build(),
                 ClusterRecord.builder()
                         .label("Record #5")
-                        .parameters(new Parameters(Map.of("Sex", 0d, "Age", 30d)))
+                        .parameters(ClusterRecordParameters.builder().map(Map.of("Sex", 0d, "Age", 30d)).build())
                         .build());
         Map<Centroid, List<ClusterRecord>> clusters = fit(target, 2, new EuclideanDistance(), 10000);
         clusters.forEach((centroid, records) -> {
@@ -92,7 +93,7 @@ public class KMeans {
                 double min = minByFeature.get(attribute);
                 coordinates.put(attribute, RANDOM.nextDouble() * (max - min) + min);
             }
-            centroids.add(new Centroid(new Parameters(coordinates)));
+            centroids.add(new Centroid(ClusterRecordParameters.builder().map(coordinates).build()));
         }
 
         return centroids;
@@ -132,7 +133,7 @@ public class KMeans {
             return centroid;
         }
 
-        Parameters average = centroid.getCoordinates();
+        ClusterRecordParameters average = centroid.getCoordinates();
         records.stream().flatMap(r -> r.getParameters().names().stream()).forEach(name -> average.add(name, 0.0));
 
         for (ClusterRecord record : records) {

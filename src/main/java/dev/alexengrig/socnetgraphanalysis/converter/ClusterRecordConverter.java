@@ -1,7 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.converter;
 
-import dev.alexengrig.socnetgraphanalysis.clustering.Parameters;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
@@ -16,7 +16,7 @@ public class ClusterRecordConverter implements Converter<VkUser, ClusterRecord> 
         return ClusterRecord.builder()
                 .id(source.getId())
                 .label(String.join(" ", source.getFirstName(), source.getLastName()))
-                .parameters(Parameters.builder()
+                .parameters(ClusterRecordParameters.builder()
                         .parameter("Accessed", source.isAccessed() ? 1d : 0d)
                         .parameter("Age", source.getAge().doubleValue())
                         .parameter("Sex", source.getSex().doubleValue())

@@ -1,7 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.converter;
 
-import dev.alexengrig.socnetgraphanalysis.clustering.Parameters;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +51,7 @@ class ClusterRecordConverterTest {
                 "Id is incorrect");
         assertEquals(String.join(" ", source.getFirstName(), source.getLastName()), record.getLabel(),
                 "Label is incorrect");
-        Parameters parameters = record.getParameters();
+        ClusterRecordParameters parameters = record.getParameters();
         assertNotNull(parameters,
                 "Parameters is null");
         assertEquals(source.isAccessed() ? 1d : 0d, parameters.get("Accessed"),

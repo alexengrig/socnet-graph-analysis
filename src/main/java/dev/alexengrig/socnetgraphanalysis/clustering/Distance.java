@@ -1,6 +1,8 @@
 package dev.alexengrig.socnetgraphanalysis.clustering;
 
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
+
 public interface Distance {
 
-    double calculate(Parameters left, Parameters right);
+    double calculate(ClusterRecordParameters left, ClusterRecordParameters right);
 }
