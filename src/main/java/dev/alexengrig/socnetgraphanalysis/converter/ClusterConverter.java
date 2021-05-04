@@ -1,6 +1,6 @@
 package dev.alexengrig.socnetgraphanalysis.converter;
 
-import dev.alexengrig.socnetgraphanalysis.clustering.Centroid;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterCentroid;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
 import dev.alexengrig.socnetgraphanalysis.model.Node;
 import dev.alexengrig.socnetgraphanalysis.model.Parent;
@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class ClusterConverter implements Converter<Map<Centroid, List<ClusterRecord>>, Parent> {
+public class ClusterConverter implements Converter<Map<ClusterCentroid, List<ClusterRecord>>, Parent> {
 
     @Override
-    public Parent convert(Map<Centroid, List<ClusterRecord>> source) {
+    public Parent convert(Map<ClusterCentroid, List<ClusterRecord>> source) {
         List<Node> target = new ArrayList<>(source.size());
         int i = 1;
-        for (Map.Entry<Centroid, List<ClusterRecord>> entry : source.entrySet()) {
+        for (Map.Entry<ClusterCentroid, List<ClusterRecord>> entry : source.entrySet()) {
             String name = "Cluster " + i++;
             List<Node> children = entry.getValue().stream()
                     .map(record -> new Node(record.getLabel()))

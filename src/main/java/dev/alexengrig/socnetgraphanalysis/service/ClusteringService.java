@@ -1,8 +1,8 @@
 package dev.alexengrig.socnetgraphanalysis.service;
 
-import dev.alexengrig.socnetgraphanalysis.clustering.Centroid;
 import dev.alexengrig.socnetgraphanalysis.clustering.EuclideanDistance;
 import dev.alexengrig.socnetgraphanalysis.clustering.KMeans;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterCentroid;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import dev.alexengrig.socnetgraphanalysis.model.Parent;
@@ -31,7 +31,7 @@ public class ClusteringService {
         List<ClusterRecord> records = users.stream()
                 .map(u -> conversionService.convert(u, ClusterRecord.class))
                 .collect(Collectors.toList());
-        Map<Centroid, List<ClusterRecord>> clusters = KMeans.fit(records, 5, new EuclideanDistance(), 100);
+        Map<ClusterCentroid, List<ClusterRecord>> clusters = KMeans.fit(records, 5, new EuclideanDistance(), 100);
         return conversionService.convert(clusters, Parent.class);
     }
 }
