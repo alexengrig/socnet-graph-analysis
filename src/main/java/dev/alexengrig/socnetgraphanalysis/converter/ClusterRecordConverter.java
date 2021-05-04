@@ -1,20 +1,21 @@
 package dev.alexengrig.socnetgraphanalysis.converter;
 
 import dev.alexengrig.socnetgraphanalysis.clustering.Parameters;
-import dev.alexengrig.socnetgraphanalysis.clustering.Record;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RecordConverter implements Converter<VkUser, Record> {
+public class ClusterRecordConverter implements Converter<VkUser, ClusterRecord> {
 
     @NonNull
     @Override
-    public Record convert(@NonNull VkUser source) {
-        return Record.builder()
-                .label(source.getFirstName() + " " + source.getLastName())
+    public ClusterRecord convert(@NonNull VkUser source) {
+        return ClusterRecord.builder()
+                .id(source.getId())
+                .label(String.join(" ", source.getFirstName(), source.getLastName()))
                 .parameters(Parameters.builder()
                         .parameter("Accessed", source.isAccessed() ? 1d : 0d)
                         .parameter("Age", source.getAge().doubleValue())

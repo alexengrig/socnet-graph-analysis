@@ -3,7 +3,7 @@ package dev.alexengrig.socnetgraphanalysis.service;
 import dev.alexengrig.socnetgraphanalysis.clustering.Centroid;
 import dev.alexengrig.socnetgraphanalysis.clustering.EuclideanDistance;
 import dev.alexengrig.socnetgraphanalysis.clustering.KMeans;
-import dev.alexengrig.socnetgraphanalysis.clustering.Record;
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import dev.alexengrig.socnetgraphanalysis.model.Parent;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,10 @@ public class ClusteringService {
         List<VkUser> users = new ArrayList<>(1 + friends.size());
         users.add(user);
         users.addAll(friends);
-        List<Record> records = users.stream()
-                .map(u -> conversionService.convert(u, Record.class))
+        List<ClusterRecord> records = users.stream()
+                .map(u -> conversionService.convert(u, ClusterRecord.class))
                 .collect(Collectors.toList());
-        Map<Centroid, List<Record>> clusters = KMeans.fit(records, 5, new EuclideanDistance(), 100);
+        Map<Centroid, List<ClusterRecord>> clusters = KMeans.fit(records, 5, new EuclideanDistance(), 100);
         return conversionService.convert(clusters, Parent.class);
     }
 }

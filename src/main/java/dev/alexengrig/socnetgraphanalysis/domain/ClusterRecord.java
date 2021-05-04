@@ -8,7 +8,7 @@ import lombok.Value;
 @Value
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Record {
+public class ClusterRecord {
 
     @EqualsAndHashCode.Include
     Integer id;

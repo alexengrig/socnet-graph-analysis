@@ -1,5 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.clustering;
 
+import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,43 +16,43 @@ public class KMeans {
     private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        List<Record> target = Arrays.asList(Record.builder()
+        List<ClusterRecord> target = Arrays.asList(ClusterRecord.builder()
                         .label("Record #1")
                         .parameters(new Parameters(Map.of("Sex", 1d, "Age", 20d)))
                         .build(),
-                Record.builder()
+                ClusterRecord.builder()
                         .label("Record #2")
                         .parameters(new Parameters(Map.of("Sex", 0d, "Age", 40d)))
                         .build(),
-                Record.builder()
+                ClusterRecord.builder()
                         .label("Record #3")
                         .parameters(new Parameters(Map.of("Sex", 1d, "Age", 30d)))
                         .build(),
-                Record.builder()
+                ClusterRecord.builder()
                         .label("Record #4")
                         .parameters(new Parameters(Map.of("Sex", 1d, "Age", 15d)))
                         .build(),
-                Record.builder()
+                ClusterRecord.builder()
                         .label("Record #5")
                         .parameters(new Parameters(Map.of("Sex", 0d, "Age", 30d)))
                         .build());
-        Map<Centroid, List<Record>> clusters = fit(target, 2, new EuclideanDistance(), 10000);
+        Map<Centroid, List<ClusterRecord>> clusters = fit(target, 2, new EuclideanDistance(), 10000);
         clusters.forEach((centroid, records) -> {
             System.out.println("--Cluster--");
             System.out.println(centroid);
-            System.out.println(records.stream().map(Record::getLabel).collect(Collectors.joining(", ")));
+            System.out.println(records.stream().map(ClusterRecord::getLabel).collect(Collectors.joining(", ")));
         });
     }
 
-    public static Map<Centroid, List<Record>> fit(List<Record> records, int k, Distance distance, int maxIterations) {
+    public static Map<Centroid, List<ClusterRecord>> fit(List<ClusterRecord> records, int k, Distance distance, int maxIterations) {
         List<Centroid> centroids = randomCentroids(records, k);
-        Map<Centroid, List<Record>> clusters = new HashMap<>();
-        Map<Centroid, List<Record>> lastState = new HashMap<>();
+        Map<Centroid, List<ClusterRecord>> clusters = new HashMap<>();
+        Map<Centroid, List<ClusterRecord>> lastState = new HashMap<>();
 
         for (int i = 0; i < maxIterations; i++) {
             boolean isLastIteration = i == maxIterations - 1;
 
-            for (Record record : records) {
+            for (ClusterRecord record : records) {
                 Centroid centroid = nearestCentroid(centroids, record, distance);
                 assignToCluster(clusters, centroid, record);
             }
@@ -68,7 +70,7 @@ public class KMeans {
         return lastState;
     }
 
-    private static List<Centroid> randomCentroids(List<Record> records, int k) {
+    private static List<Centroid> randomCentroids(List<ClusterRecord> records, int k) {
         Map<String, Double> maxByFeature = new HashMap<>();
         Map<String, Double> minByFeature = new HashMap<>();
 
@@ -96,7 +98,7 @@ public class KMeans {
         return centroids;
     }
 
-    private static Centroid nearestCentroid(List<Centroid> centroids, Record record, Distance distance) {
+    private static Centroid nearestCentroid(List<Centroid> centroids, ClusterRecord record, Distance distance) {
         double minimumDistance = Double.MAX_VALUE;
         Centroid nearest = null;
 
@@ -111,7 +113,7 @@ public class KMeans {
         return nearest;
     }
 
-    private static void assignToCluster(Map<Centroid, List<Record>> clusters, Centroid centroid, Record record) {
+    private static void assignToCluster(Map<Centroid, List<ClusterRecord>> clusters, Centroid centroid, ClusterRecord record) {
         clusters.compute(centroid, (ignore, list) -> {
             if (list == null) {
                 list = new ArrayList<>();
@@ -121,11 +123,11 @@ public class KMeans {
         });
     }
 
-    private static List<Centroid> relocateCentroids(Map<Centroid, List<Record>> clusters) {
+    private static List<Centroid> relocateCentroids(Map<Centroid, List<ClusterRecord>> clusters) {
         return clusters.entrySet().stream().map(e -> average(e.getKey(), e.getValue())).collect(Collectors.toList());
     }
 
-    private static Centroid average(Centroid centroid, List<Record> records) {
+    private static Centroid average(Centroid centroid, List<ClusterRecord> records) {
         if (records == null || records.isEmpty()) {
             return centroid;
         }
@@ -133,7 +135,7 @@ public class KMeans {
         Parameters average = centroid.getCoordinates();
         records.stream().flatMap(r -> r.getParameters().names().stream()).forEach(name -> average.add(name, 0.0));
 
-        for (Record record : records) {
+        for (ClusterRecord record : records) {
             record.getParameters().forEach((name, value) -> average.update(name, currentValue -> value + currentValue));
         }
 
