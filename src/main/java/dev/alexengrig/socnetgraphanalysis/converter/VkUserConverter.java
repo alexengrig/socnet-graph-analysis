@@ -28,8 +28,8 @@ public class VkUserConverter implements Converter<GetResponse, VkUser> {
     public VkUser convert(@NonNull GetResponse source) {
         return VkUser.builder()
                 .id(source.getId())
-                .firstName(source.getFirstName())
-                .lastName(source.getLastName())
+                .firstName(getString(source.getFirstName()))
+                .lastName(getString(source.getLastName()))
                 .birthday(source.getBdate())
                 .age(getAge(source.getBdate()))
                 .accessed(hasAccess(source))
@@ -74,6 +74,10 @@ public class VkUserConverter implements Converter<GetResponse, VkUser> {
         boolean isClosed = source.getIsClosed() == null || !source.getIsClosed();
         boolean canAccessClosed = source.getCanAccessClosed() != null && !source.getCanAccessClosed();
         return isClosed || canAccessClosed;
+    }
+
+    private String getString(String value) {
+        return value == null ? "" : value;
     }
 
     private <T> Integer getInteger(T object, Function<T, Integer> getter) {
