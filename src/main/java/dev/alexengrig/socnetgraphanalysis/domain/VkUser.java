@@ -1,40 +1,44 @@
 package dev.alexengrig.socnetgraphanalysis.domain;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class VkUser {
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private String birthday;
-    private Integer age;
 
-    private boolean accessed;
+    @EqualsAndHashCode.Include
+    Integer id;
+    String firstName;
+    String lastName;
+    String birthday;
+    Integer age;
 
-    private Integer sex;
-    private Integer city;
-    private Integer country;
-    private Integer friendStatus;
+    boolean accessed;
 
-    private Integer relation;
-    private Integer political;
-    private Integer religion;
-    private Integer lifeMain;
-    private Integer peopleMain;
-    private Integer smoking;
-    private Integer alcohol;
+    Integer sex;
+    Integer city;
+    Integer country;
+    Integer friendStatus;
 
-    private Integer commonFriendsCount;
-    private Integer friendsCount;
-    private Integer followersCount;
-    private Integer audiosCount;
-    private Integer videosCount;
-    private Integer photosCount;
-    private Integer groupsCount;
-    private Integer albumsCount;
-    private Integer notesCount;
-    private Integer pagesCount;
+    Integer relation;
+    Integer political;
+    Integer religion;
+    Integer lifeMain;
+    Integer peopleMain;
+    Integer smoking;
+    Integer alcohol;
+
+    Integer commonFriendsCount;
+    Integer friendsCount;
+    Integer followersCount;
+    Integer audiosCount;
+    Integer videosCount;
+    Integer photosCount;
+    Integer groupsCount;
+    Integer albumsCount;
+    Integer notesCount;
+    Integer pagesCount;
 }
