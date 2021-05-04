@@ -1,20 +1,20 @@
 package dev.alexengrig.socnetgraphanalysis.clustering;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Singular;
+import lombok.Value;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-@Data
+@Value
 @Builder
 public class Parameters {
 
     @Singular("parameter")
-    private final Map<String, Double> map;
+    Map<String, Double> map;
 
     public boolean like(Parameters other) {
         if (map.size() != other.map.size()) {
