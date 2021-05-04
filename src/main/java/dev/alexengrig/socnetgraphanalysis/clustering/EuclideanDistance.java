@@ -6,9 +6,7 @@ public class EuclideanDistance implements Distance {
 
     @Override
     public double calculate(ClusterRecordParameters left, ClusterRecordParameters right) {
-        if (!left.like(right)) {
-            throw new IllegalArgumentException("Different parameters: " + left + " and " + right);
-        }
+        assertLikeParameters(left, right);
         double sum = 0;
         for (String key : left.names()) {
             Double leftValue = left.get(key);
@@ -16,5 +14,11 @@ public class EuclideanDistance implements Distance {
             sum += Math.pow(leftValue - rightValue, 2);
         }
         return Math.sqrt(sum);
+    }
+
+    private void assertLikeParameters(ClusterRecordParameters left, ClusterRecordParameters right) {
+        if (!left.like(right)) {
+            throw new IllegalArgumentException("Different parameters: " + left + " and " + right);
+        }
     }
 }
