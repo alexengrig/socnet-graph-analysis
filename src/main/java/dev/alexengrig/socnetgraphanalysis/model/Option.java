@@ -1,12 +1,14 @@
 package dev.alexengrig.socnetgraphanalysis.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 @Builder
+@AllArgsConstructor
 public class Option {
 
-    String id;
-    String label;
+    private String id;
+    private String label;
 }
