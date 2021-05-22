@@ -14,14 +14,15 @@
     <h1>Socnet-graph-analysis</h1>
     <form action="#" class="container" method="post" name="condition" th:action="@{/clustering}">
         <div class="mb-3 row col-4">
-            <label class="form-label" for="vkUserId">Vk user id</label>
+            <label class="form-label" for="vkUserId">Идентификатор пользователя ВКонтакте</label>
             <input class="form-control" id="vkUserId" name="vkUserId" required/>
             <div class="form-text" id="vkUserIdHelp">https://vk.com/<b>this_is_user_id</b></div>
         </div>
         <div class="mb-3 row col-4">
-            <label class="form-label" for="numberOfClusters">Number of clusters</label>
+            <label class="form-label" for="numberOfClusters">Кол-во кластеров</label>
             <input class="form-control" id="numberOfClusters" name="numberOfClusters" required type="number"/>
         </div>
+        <label class="form-label">Свойства для кластеризации</label>
         <div class="row">
             <div class="col-4">
                 <div class="mb-3 form-check"
