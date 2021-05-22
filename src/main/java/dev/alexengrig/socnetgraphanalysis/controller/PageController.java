@@ -1,8 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.controller;
 
-import dev.alexengrig.socnetgraphanalysis.model.ClusteringCondition;
-import dev.alexengrig.socnetgraphanalysis.model.Parent;
-import dev.alexengrig.socnetgraphanalysis.service.ClusteringService;
+import dev.alexengrig.socnetgraphanalysis.model.ClusteringConditionModel;
+import dev.alexengrig.socnetgraphanalysis.service.PageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,20 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class PageController {
 
-    private final ClusteringService clusteringService;
+    private final PageService pageService;
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("condition", new ClusteringCondition("doubleclick"));
+        model.addAttribute("propertyOptions", pageService.getPropertyOptions());
         return "index";
     }
 
     @PostMapping("/clustering")
-    public String clustering(@ModelAttribute("condition") ClusteringCondition clusteringCondition, Model model) {
-        String vkUserId = clusteringCondition.getVkUserId();
-        model.addAttribute("vkUserId", vkUserId);
-        Parent clustering = clusteringService.kMeans(vkUserId);
-        model.addAttribute("clustering", clustering);
+    public String clustering(@ModelAttribute("condition") ClusteringConditionModel condition, Model model) {
+        model.addAttribute("clustering", pageService.clustering(condition));
         return "clustering";
     }
 }
