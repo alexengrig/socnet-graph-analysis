@@ -11,9 +11,21 @@
 <body>
 <div>
     <h1>Socnet-graph-analysis</h1>
-    <form action="#" method="post" th:action="@{/clustering}" th:object="${condition}">
-        <label for="vkUserId">Vk user id: </label>
-        <input id="vkUserId" th:field="*{vkUserId}"/>
+    <form action="#" method="post" name="condition" th:action="@{/clustering}">
+        <div>
+            <label for="vkUserId">Vk user id:
+                <input id="vkUserId" name="vkUserId"/>
+            </label>
+        </div>
+        <div>
+            <label for="numberOfClusters">Number of clusters:
+                <input id="numberOfClusters" name="numberOfClusters"/>
+            </label>
+        </div>
+        <div th:each="option, optionStat : ${propertyOptions}">
+            <input name="propertyOptions" th:id="${option.id}" th:value="${option.id}" type="checkbox"/>
+            <label th:for="${option.id}" th:text="${option.label}"></label>
+        </div>
         <input type="submit"/>
     </form>
 </div>
