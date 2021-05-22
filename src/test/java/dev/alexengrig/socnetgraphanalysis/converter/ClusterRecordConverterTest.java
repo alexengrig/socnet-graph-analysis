@@ -3,7 +3,10 @@ package dev.alexengrig.socnetgraphanalysis.converter;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecord;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterRecordParameters;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
+import dev.alexengrig.socnetgraphanalysis.domain.VkUserProperty;
 import org.junit.jupiter.api.Test;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -43,7 +46,7 @@ class ClusterRecordConverterTest {
                 .pagesCount(22)
                 .build();
 
-        ClusterRecord record = CONVERTER.convert(source);
+        ClusterRecord record = CONVERTER.convert(source, Set.of(VkUserProperty.values()));
 
         assertNotNull(record,
                 "Record is null");
