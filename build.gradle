@@ -23,9 +23,6 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('vkSdkVersion', "1.0.8")
-}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -33,9 +30,12 @@ dependencies {
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    implementation("com.vk.api:sdk:${vkSdkVersion}") {
+    implementation('com.vk.api:sdk:1.0.8') {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
     }
+
+    implementation 'org.webjars:webjars-locator:0.40'
+    implementation 'org.webjars:bootstrap:5.0.1'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

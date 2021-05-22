@@ -6,7 +6,8 @@
     <title>Socnet-graph-analysis</title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link th:href="@{webjars/bootstrap/css/bootstrap.min.css} " th:rel="stylesheet"/>
+    <link th:href="@{/css/index.css}" th:rel="stylesheet">
 </head>
 <body>
 <div>
@@ -29,5 +30,6 @@
         <input type="submit"/>
     </form>
 </div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>
