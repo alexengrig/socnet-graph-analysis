@@ -9,25 +9,69 @@
     <link th:href="@{webjars/bootstrap/css/bootstrap.min.css} " th:rel="stylesheet"/>
     <link th:href="@{/css/index.css}" th:rel="stylesheet">
 </head>
-<body>
+<body class="p-5">
 <div>
     <h1>Socnet-graph-analysis</h1>
-    <form action="#" method="post" name="condition" th:action="@{/clustering}">
-        <div>
-            <label for="vkUserId">Vk user id:
-                <input id="vkUserId" name="vkUserId"/>
-            </label>
+    <form action="#" class="container" method="post" name="condition" th:action="@{/clustering}">
+        <div class="mb-3 row col-4">
+            <label class="form-label" for="vkUserId">Vk user id</label>
+            <input class="form-control" id="vkUserId" name="vkUserId" required/>
+            <div class="form-text" id="vkUserIdHelp">https://vk.com/<b>this_is_user_id</b></div>
         </div>
-        <div>
-            <label for="numberOfClusters">Number of clusters:
-                <input id="numberOfClusters" name="numberOfClusters"/>
-            </label>
+        <div class="mb-3 row col-4">
+            <label class="form-label" for="numberOfClusters">Number of clusters</label>
+            <input class="form-control" id="numberOfClusters" name="numberOfClusters" required type="number"/>
         </div>
-        <div th:each="option, optionStat : ${propertyOptions}">
-            <input name="propertyOptions" th:id="${option.id}" th:value="${option.id}" type="checkbox"/>
-            <label th:for="${option.id}" th:text="${option.label}"></label>
+        <div class="row">
+            <div class="col-4">
+                <div class="mb-3 form-check"
+                     th:each="i : ${#numbers.sequence(0, propertyOptions.size() / 3)}"
+                >
+                    <input class="form-check-input"
+                           name="propertyOptions"
+                           th:id="${propertyOptions[__${i}__].id}"
+                           th:value="${propertyOptions[__${i}__].id}"
+                           type="checkbox"
+                    />
+                    <label class="form-check-label"
+                           th:for="${propertyOptions[__${i}__].id}"
+                           th:text="${propertyOptions[__${i}__].label}"
+                    ></label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="mb-3 form-check"
+                     th:each="i : ${#numbers.sequence((propertyOptions.size() / 3) + 1, (propertyOptions.size() / 3) * 2 + 1)}"
+                >
+                    <input class="form-check-input"
+                           name="propertyOptions"
+                           th:id="${propertyOptions[__${i}__].id}"
+                           th:value="${propertyOptions[__${i}__].id}"
+                           type="checkbox"
+                    />
+                    <label class="form-check-label"
+                           th:for="${propertyOptions[__${i}__].id}"
+                           th:text="${propertyOptions[__${i}__].label}"
+                    ></label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="mb-3 form-check"
+                     th:each="i : ${#numbers.sequence((propertyOptions.size() / 3) * 2 + 2, propertyOptions.size() - 1)}">
+                    <input class="form-check-input"
+                           name="propertyOptions"
+                           th:id="${propertyOptions[__${i}__].id}"
+                           th:value="${propertyOptions[__${i}__].id}"
+                           type="checkbox"
+                    />
+                    <label class="form-check-label"
+                           th:for="${propertyOptions[__${i}__].id}"
+                           th:text="${propertyOptions[__${i}__].label}"
+                    ></label>
+                </div>
+            </div>
         </div>
-        <input type="submit"/>
+        <input class="btn btn-primary" type="submit"/>
     </form>
 </div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
