@@ -11,20 +11,23 @@
 </head>
 <body class="p-5">
 <div>
-    <h1>Socnet-graph-analysis</h1>
     <form action="#" class="container" method="post" name="condition" th:action="@{/clustering}">
-        <div class="mb-3 row col-4">
-            <label class="form-label" for="vkUserId">Идентификатор пользователя ВКонтакте</label>
-            <input class="form-control" id="vkUserId" name="vkUserId" required/>
-            <div class="form-text" id="vkUserIdHelp">https://vk.com/<b>this_is_user_id</b></div>
-        </div>
-        <div class="mb-3 row col-4">
-            <label class="form-label" for="numberOfClusters">Кол-во кластеров</label>
-            <input class="form-control" id="numberOfClusters" name="numberOfClusters" required type="number"/>
+        <h1 class="mb-4">Кластеризация пользователей ВКонтакте</h1>
+        <div class="row">
+            <div class="mb-3 col-5">
+                <label class="form-label" for="vkUserId">Идентификатор пользователя</label>
+                <input class="form-control" id="vkUserId" name="vkUserId" required/>
+                <div class="form-text" id="vkUserIdHelp">https://vk.com/<b>это_идентификатор_пользователя</b>, например, <b>id1</b> или <b>durov</b>
+                </div>
+            </div>
+            <div class="mb-3 col-4">
+                <label class="form-label" for="numberOfClusters">Кол-во кластеров</label>
+                <input class="form-control" id="numberOfClusters" name="numberOfClusters" required type="number"/>
+            </div>
         </div>
         <label class="form-label">Свойства для кластеризации</label>
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 <div class="mb-3 form-check"
                      th:each="i : ${#numbers.sequence(0, propertyOptions.size() / 3)}"
                 >
@@ -40,7 +43,7 @@
                     ></label>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="mb-3 form-check"
                      th:each="i : ${#numbers.sequence((propertyOptions.size() / 3) + 1, (propertyOptions.size() / 3) * 2 + 1)}"
                 >
@@ -56,7 +59,7 @@
                     ></label>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="mb-3 form-check"
                      th:each="i : ${#numbers.sequence((propertyOptions.size() / 3) * 2 + 2, propertyOptions.size() - 1)}">
                     <input class="form-check-input"
