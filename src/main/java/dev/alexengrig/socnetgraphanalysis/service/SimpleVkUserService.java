@@ -26,6 +26,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SimpleVkUserService implements VkUserService {
 
+    private static final Fields[] USER_FIELDS = new Fields[]{
+            Fields.BDATE,
+            Fields.SEX,
+            Fields.CITY,
+            Fields.COUNTRY,
+            Fields.FRIEND_STATUS,
+            Fields.RELATION,
+            Fields.PERSONAL,
+            Fields.COMMON_COUNT,
+            Fields.COUNTERS
+    };
+
     private final ConversionService conversionService;
     private final UsersGetQuery usersGetQuery;
     private final FriendsGetQuery friendsGetQuery;
@@ -39,7 +51,7 @@ public class SimpleVkUserService implements VkUserService {
     @Override
     public Optional<VkUser> getUserById(String vkUserId) {
         Objects.requireNonNull(vkUserId, "Vk user id must not be null");
-        var query = this.usersGetQuery.userIds(vkUserId).fields(Fields.COUNTERS, Fields.BDATE);
+        var query = this.usersGetQuery.userIds(vkUserId).fields(USER_FIELDS);
         var users = execute(query, () -> "getting user by id: " + vkUserId);
         if (users.size() == 1) {
             var user = users.get(0);
