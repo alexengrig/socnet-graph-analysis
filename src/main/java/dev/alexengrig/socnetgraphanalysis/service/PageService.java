@@ -30,8 +30,9 @@ public class PageService {
                 .collect(Collectors.toList());
     }
 
-    public Object clustering(ClusteringConditionModel conditionModel) {
+    public Object clustering(String code, ClusteringConditionModel conditionModel) {
         ClusteringRequest clusteringRequest = clusteringConditionModel2ClusteringRequestConverter.convert(conditionModel);
+        clusteringRequest.setCode(code);
         ClusteringResponse clusteringResponse = clusteringService.kMeans(clusteringRequest);
         return clusteringResponse2ClusteringModelConverter.convert(clusteringResponse);
     }

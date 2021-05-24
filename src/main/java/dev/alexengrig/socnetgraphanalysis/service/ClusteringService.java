@@ -27,8 +27,8 @@ public class ClusteringService {
 
     public ClusteringResponse kMeans(ClusteringRequest request) {
         String vkUserId = request.getVkUserId();
-        VkUser user = vkUserService.getUserById(vkUserId).orElseThrow();
-        List<VkUser> friends = vkUserService.getUserFriendsById(user.getId());
+        VkUser user = vkUserService.getUserById(request.getCode(), vkUserId).orElseThrow();
+        List<VkUser> friends = vkUserService.getUserFriendsById(request.getCode(), user.getId());
         List<VkUser> users = new ArrayList<>(1 + friends.size());
         users.add(user);
         users.addAll(friends);

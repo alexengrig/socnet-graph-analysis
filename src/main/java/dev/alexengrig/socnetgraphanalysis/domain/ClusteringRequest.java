@@ -12,4 +12,5 @@ public class ClusteringRequest {
     String vkUserId;
     Integer numberOfClusters;
     Set<VkUserProperty> properties;
+    String code;
 }
