@@ -9,6 +9,16 @@
       "name": "application.vk.access-token",
       "type": "java.lang.String",
       "description": "Access token for VK-SDK."
+    },
+    {
+      "name": "application.vk.oauth.redirect-url",
+      "type": "java.lang.String",
+      "description": "OAuth redirect URL."
+    },
+    {
+      "name": "application.vk.oauth.version",
+      "type": "java.lang.String",
+      "description": "OAuth version."
     }
   ]
 }

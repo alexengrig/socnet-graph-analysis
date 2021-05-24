@@ -1,4 +1,14 @@
+logging:
+  level:
+    org:
+      springframework:
+        web: trace
 application:
   vk:
     app-id:
     access-token:
+    oauth:
+      redirect-url: http://127.0.0.1:8088
+      version: 5.130
+server:
+  port: 8088
