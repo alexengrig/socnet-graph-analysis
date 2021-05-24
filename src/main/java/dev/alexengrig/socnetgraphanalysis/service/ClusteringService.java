@@ -8,6 +8,7 @@ import dev.alexengrig.socnetgraphanalysis.domain.ClusteringRequest;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusteringResponse;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUser;
 import dev.alexengrig.socnetgraphanalysis.factory.KMeansAlgorithmFactory;
+import dev.alexengrig.socnetgraphanalysis.randomizer.VkUserRandomizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,22 +25,40 @@ public class ClusteringService {
     private final VkUserService vkUserService;
     private final ClusterRecordConverter clusterRecordConverter;
     private final KMeansAlgorithmFactory algorithmFactory;
+    private final VkUserRandomizer vkUserRandomizer;
 
     public ClusteringResponse kMeans(ClusteringRequest request) {
-        String vkUserId = request.getVkUserId();
-        VkUser user = vkUserService.getUserById(request.getCode(), vkUserId).orElseThrow();
-        List<VkUser> friends = vkUserService.getUserFriendsById(request.getCode(), user.getId());
-        List<VkUser> users = new ArrayList<>(1 + friends.size());
-        users.add(user);
-        users.addAll(friends);
-        Set<ClusterRecord> records = users.stream()
-                .map(u -> clusterRecordConverter.convert(u, request.getProperties()))
-                .collect(Collectors.toSet());
+        Set<ClusterRecord> records = getClusterRecords(request);
         int numberOfClusters = request.getNumberOfClusters();
         KMeansAlgorithm kMeansAlgorithm = algorithmFactory.createAlgorithm(numberOfClusters);
         Map<ClusterCentroid, Set<ClusterRecord>> clusters = kMeansAlgorithm.apply(records);
         return ClusteringResponse.builder()
                 .clusters(clusters)
                 .build();
+    }
+
+    private Set<ClusterRecord> getClusterRecords(ClusteringRequest request) {
+        List<VkUser> users = request.isTest() ? getTestVkUsers(request) : getVkUsers(request);
+        return users.stream()
+                .map(u -> clusterRecordConverter.convert(u, request.getProperties()))
+                .collect(Collectors.toSet());
+    }
+
+    private List<VkUser> getTestVkUsers(ClusteringRequest request) {
+        Integer count = request.getCount();
+        if (count == null) {
+            count = 250;
+        }
+        return vkUserRandomizer.randomVkUsers(count);
+    }
+
+    private List<VkUser> getVkUsers(ClusteringRequest request) {
+        String vkUserId = request.getVkUserId();
+        VkUser user = vkUserService.getUserById(request.getCode(), vkUserId).orElseThrow();
+        List<VkUser> friends = vkUserService.getUserFriendsById(request.getCode(), user.getId());
+        List<VkUser> users = new ArrayList<>(1 + friends.size());
+        users.add(user);
+        users.addAll(friends);
+        return users;
     }
 }

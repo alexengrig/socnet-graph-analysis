@@ -7,6 +7,7 @@ import dev.alexengrig.socnetgraphanalysis.domain.ClusteringRequest;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusteringResponse;
 import dev.alexengrig.socnetgraphanalysis.domain.VkUserProperty;
 import dev.alexengrig.socnetgraphanalysis.model.ClusteringConditionModel;
+import dev.alexengrig.socnetgraphanalysis.model.ClusteringModel;
 import dev.alexengrig.socnetgraphanalysis.model.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,8 @@ public class PageService {
                 .collect(Collectors.toList());
     }
 
-    public Object clustering(String code, ClusteringConditionModel conditionModel) {
+    public ClusteringModel clustering(ClusteringConditionModel conditionModel) {
         ClusteringRequest clusteringRequest = clusteringConditionModel2ClusteringRequestConverter.convert(conditionModel);
-        clusteringRequest.setCode(code);
         ClusteringResponse clusteringResponse = clusteringService.kMeans(clusteringRequest);
         return clusteringResponse2ClusteringModelConverter.convert(clusteringResponse);
     }

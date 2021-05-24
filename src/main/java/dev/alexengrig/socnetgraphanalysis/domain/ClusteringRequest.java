@@ -13,4 +13,6 @@ public class ClusteringRequest {
     Integer numberOfClusters;
     Set<VkUserProperty> properties;
     String code;
+    boolean test;
+    Integer count;
 }

@@ -27,6 +27,9 @@ public class ClusteringConditionModel2ClusteringRequestConverter implements Conv
                 .vkUserId(source.getVkUserId())
                 .numberOfClusters(source.getNumberOfClusters())
                 .properties(getProperties(source))
+                .code(source.getCode())
+                .test("test".equals(source.getTest()))
+                .count(source.getCount())
                 .build();
     }
 

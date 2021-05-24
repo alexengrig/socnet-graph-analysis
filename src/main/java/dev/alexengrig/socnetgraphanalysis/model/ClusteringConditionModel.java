@@ -10,4 +10,8 @@ public class ClusteringConditionModel {
     private String vkUserId;
     private Integer numberOfClusters;
     private List<String> propertyOptions;
+
+    private String code;
+    private String test;
+    private Integer count;
 }
