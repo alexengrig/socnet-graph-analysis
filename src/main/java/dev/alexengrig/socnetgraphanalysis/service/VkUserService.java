@@ -63,14 +63,16 @@ public class VkUserService {
         }
     }
 
+    public List<VkUser> getUsersByIds(String code, List<String> vkUserIds) {
+        var query = vkQueryFactory.usersGetQuery(code).userIds(vkUserIds).fields(USER_FIELDS);
+        var users = execute(query, () -> "getting users by ids: " + vkUserIds);
+        return users.stream().map(vkUserConverter::convert).collect(Collectors.toList());
+    }
+
     public List<VkUser> getUserFriendsById(String code, Integer vkUserId) {
         var query = vkQueryFactory.friendsGetQuery(code).userId(vkUserId);
         var friends = execute(query, () -> "getting user friends by id: " + vkUserId).getItems();
-        return friends.stream()
-                .map(id -> getUserById(code, id))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+        return getUsersByIds(code, friends.stream().map(Object::toString).collect(Collectors.toList()));
     }
 
     private <T> T execute(ApiRequest<T> request, Supplier<String> errorMessageSupplier) {
