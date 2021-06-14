@@ -36,4 +36,9 @@ public class PageService {
         ClusteringResponse clusteringResponse = clusteringService.kMeans(clusteringRequest);
         return modelConverter.convert(clusteringRequest, clusteringResponse);
     }
+
+    public List<Double> elbow(ClusteringConditionModel conditionModel) {
+        ClusteringRequest clusteringRequest = requestConverter.convert(conditionModel);
+        return clusteringService.elbow(clusteringRequest);
+    }
 }

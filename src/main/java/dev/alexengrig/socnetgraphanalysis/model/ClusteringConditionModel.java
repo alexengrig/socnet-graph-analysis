@@ -14,4 +14,6 @@ public class ClusteringConditionModel {
     private String code;
     private String test;
     private Integer count;
+
+    private String action;
 }

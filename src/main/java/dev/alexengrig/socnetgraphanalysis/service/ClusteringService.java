@@ -1,5 +1,7 @@
 package dev.alexengrig.socnetgraphanalysis.service;
 
+import dev.alexengrig.socnetgraphanalysis.clustering.Distance;
+import dev.alexengrig.socnetgraphanalysis.clustering.EuclideanDistance;
 import dev.alexengrig.socnetgraphanalysis.clustering.KMeansAlgorithm;
 import dev.alexengrig.socnetgraphanalysis.converter.ClusterRecordConverter;
 import dev.alexengrig.socnetgraphanalysis.domain.ClusterCentroid;
@@ -30,7 +32,8 @@ public class ClusteringService {
     public ClusteringResponse kMeans(ClusteringRequest request) {
         Set<ClusterRecord> records = getClusterRecords(request);
         int numberOfClusters = request.getNumberOfClusters();
-        KMeansAlgorithm kMeansAlgorithm = algorithmFactory.createAlgorithm(numberOfClusters);
+        EuclideanDistance distance = new EuclideanDistance();
+        KMeansAlgorithm kMeansAlgorithm = algorithmFactory.createAlgorithm(numberOfClusters, distance);
         Map<ClusterCentroid, Set<ClusterRecord>> clusters = kMeansAlgorithm.apply(records);
         return ClusteringResponse.builder()
                 .clusters(clusters)
@@ -61,5 +64,30 @@ public class ClusteringService {
         users.add(user);
         users.addAll(friends);
         return users;
+    }
+
+    public List<Double> elbow(ClusteringRequest request) {
+        Set<ClusterRecord> records = getClusterRecords(request);
+        EuclideanDistance distance = new EuclideanDistance();
+        List<Double> sumOfSquaredErrors = new ArrayList<>();
+        for (int numberOfClusters = 2; numberOfClusters <= 16; numberOfClusters++) {
+            KMeansAlgorithm kMeansAlgorithm = algorithmFactory.createAlgorithm(numberOfClusters, distance);
+            Map<ClusterCentroid, Set<ClusterRecord>> clusters = kMeansAlgorithm.apply(records);
+            double sse = sse(clusters, distance);
+            sumOfSquaredErrors.add(sse);
+        }
+        return sumOfSquaredErrors;
+    }
+
+    public double sse(Map<ClusterCentroid, Set<ClusterRecord>> clusters, Distance distance) {
+        double sum = 0;
+        for (Map.Entry<ClusterCentroid, Set<ClusterRecord>> entry : clusters.entrySet()) {
+            ClusterCentroid centroid = entry.getKey();
+            for (ClusterRecord record : entry.getValue()) {
+                double d = distance.calculate(centroid.getCoordinates(), record.getParameters());
+                sum += Math.pow(d, 2);
+            }
+        }
+        return sum;
     }
 }

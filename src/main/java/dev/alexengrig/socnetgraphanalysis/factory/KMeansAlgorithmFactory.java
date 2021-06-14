@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class KMeansAlgorithmFactory {
 
-    public KMeansAlgorithm createAlgorithm(int numberOfClusters) {
+    public KMeansAlgorithm createAlgorithm(int numberOfClusters, EuclideanDistance distance) {
         return KMeansAlgorithm.builder()
-                .distance(new EuclideanDistance())
+                .distance(distance)
                 .numberOfClusters(numberOfClusters)
                 .build();
     }

@@ -48,7 +48,16 @@ public class PageController {
         if (isNull(condition.getCode())) {
             return getOAuthRedirectUrl();
         }
+        if (nonNull(condition.getAction())) {
+            return getElbow(condition, model);
+        }
         model.addAttribute("clustering", pageService.clustering(condition));
         return "clustering";
+    }
+
+    private String getElbow(ClusteringConditionModel condition, Model model) {
+        pageService.clustering(condition);
+        model.addAttribute("elbow", pageService.elbow(condition));
+        return "elbow";
     }
 }
