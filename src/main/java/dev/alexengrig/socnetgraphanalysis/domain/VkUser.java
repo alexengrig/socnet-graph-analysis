@@ -18,6 +18,9 @@ public class VkUser {
 
     boolean accessed;
 
+    String cityName;
+    String countryName;
+
     Integer sex;
     Integer city;
     Integer country;

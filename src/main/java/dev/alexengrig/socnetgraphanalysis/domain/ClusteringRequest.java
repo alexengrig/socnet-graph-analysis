@@ -3,6 +3,7 @@ package dev.alexengrig.socnetgraphanalysis.domain;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -15,4 +16,5 @@ public class ClusteringRequest {
     String code;
     boolean test;
     Integer count;
+    List<VkUser> vkUsers;
 }
