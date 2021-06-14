@@ -11,61 +11,52 @@
     <link rel="stylesheet" th:href="@{/css/tree.css}">
 </head>
 <body class="p-5">
-<h1 class="mb-4">Результат кластеризации пользователей ВКонтакте</h1>
-<h2 class="mb-4">Условия кластеризации</h2>
-<div class="row">
-    <div class="mb-3 col-5">
-        <label class="form-label" for="vkUserId">Идентификатор пользователя</label>
-        <input class="form-control"
-               disabled
-               id="vkUserId"
-               th:value="${clustering.vkUserId}"
-        />
+<div class="mx-auto">
+    <h1 class="mb-4">Результат кластеризации пользователей ВКонтакте</h1>
+    <h2 class="mb-4">Условия кластеризации</h2>
+    <div class="mb-4">
+        <p>Идентификатор пользователя: <b th:text="${clustering.vkUserId}"></b></p>
+        <p>Кол-во кластеров: <b th:text="${clustering.numberOfClusters}"></b></p>
+        <p>Кол-во пользователей: <b th:text="${clustering.numberOfUsers}"></b></p>
     </div>
-    <div class="mb-3 col-4">
-        <label class="form-label" for="numberOfClusters">Кол-во кластеров</label>
-        <input class="form-control"
-               disabled
-               id="numberOfClusters"
-               th:value="${clustering.numberOfClusters}"
-               type="number"
-        />
-    </div>
-</div>
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button aria-controls="cluster-view" aria-selected="false" class="nav-link" data-bs-target="#cluster-view"
-                data-bs-toggle="tab"
-                id="cluster-view-tab" role="tab" type="button"
-        >
-            Кластер
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button aria-controls="table-view" aria-selected="true" class="nav-link active" data-bs-target="#table-view"
-                data-bs-toggle="tab" id="table-view-tab" role="tab" type="button"
-        >
-            Таблица
-        </button>
-    </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-    <div aria-labelledby="cluster-view-tab" class="tab-pane fade" id="cluster-view" role="tabpanel">
-        <div id="cluster"></div>
-    </div>
-    <div aria-labelledby="table-view-tab" class="tab-pane fade show active" id="table-view" role="tabpanel">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col" th:each="header : ${clustering.table.headers}" th:text="${header}"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="row : ${clustering.table.rows}">
-                <th scope="row" th:each="cell : ${row}" th:text="${cell}"></th>
-            </tr>
-            </tbody>
-        </table>
+    <h2 class="mb-4">Результат кластеризации</h2>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button aria-controls="cluster-view" aria-selected="false" class="nav-link active"
+                    data-bs-target="#cluster-view"
+                    data-bs-toggle="tab"
+                    id="cluster-view-tab" role="tab" type="button"
+            >
+                Кластер
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button aria-controls="table-view" aria-selected="true" class="nav-link" data-bs-target="#table-view"
+                    data-bs-toggle="tab" id="table-view-tab" role="tab" type="button"
+            >
+                Таблица
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div aria-labelledby="cluster-view-tab" class="tab-pane fade show active" id="cluster-view" role="tabpanel">
+            <div id="cluster"></div>
+        </div>
+        <div aria-labelledby="table-view-tab" class="tab-pane table-responsive table-wrapper fade" id="table-view"
+             role="tabpanel">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" th:each="header : ${clustering.table.headers}" th:text="${header}"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${clustering.table.rows}">
+                    <th scope="row" th:each="cell : ${row}" th:text="${cell}"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <script charset="utf-8" src="https://d3js.org/d3.v3.min.js"></script>

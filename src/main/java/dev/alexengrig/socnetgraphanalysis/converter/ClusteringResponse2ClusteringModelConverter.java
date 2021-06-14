@@ -20,6 +20,7 @@ public class ClusteringResponse2ClusteringModelConverter {
         return ClusteringModel.builder()
                 .vkUserId(request.getVkUserId())
                 .numberOfClusters(request.getNumberOfClusters())
+                .numberOfUsers(request.getVkUsers().size())
                 .options(request.getProperties().stream()
                         .map(vkUserProperty2OptionConverter::convert)
                         .collect(Collectors.toList()))

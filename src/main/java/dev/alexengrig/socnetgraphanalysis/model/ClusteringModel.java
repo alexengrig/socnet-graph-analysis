@@ -11,6 +11,7 @@ public class ClusteringModel {
 
     private String vkUserId;
     private Integer numberOfClusters;
+    private Integer numberOfUsers;
     private List<Option> options;
 
     private Table table;

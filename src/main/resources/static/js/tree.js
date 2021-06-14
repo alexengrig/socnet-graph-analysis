@@ -1,5 +1,5 @@
 function createTree(root, elementId) {
-    var diameter = 1100;
+    var diameter = 1600;
     var tree = d3.layout.tree()
         .size([360, diameter / 2 - 300])
         .separation(function (a, b) {

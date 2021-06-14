@@ -28,12 +28,14 @@ public class ClusterConverter {
         Map<Integer, String> cityMap = request.getVkUsers().stream()
                 .collect(Collectors.toMap(VkUser::getCity, VkUser::getCityName, (l, r) -> l));
         List<Node> target = new ArrayList<>(source.size());
+        int i = 1;
         for (Map.Entry<ClusterCentroid, Set<ClusterRecord>> entry : source.entrySet()) {
-            String name = getDetails(entry.getKey().getCoordinates(), countryMap, cityMap);
             List<Node> children = entry.getValue().stream()
                     .map(record -> new Node(record.getLabel(), getDetails(record.getParameters(), countryMap, cityMap)))
                     .collect(Collectors.toList());
-            Parent parent = new Parent(name, "Кол-во пользователей: " + children.size(), children);
+            String detail = "Кол-во пользователей: " + children.size() + ", "
+                    + getDetails(entry.getKey().getCoordinates(), countryMap, cityMap);
+            Parent parent = new Parent("Кластер №" + i++, detail, children);
             target.add(parent);
         }
         return new Parent("Пользователи", "Кол-во кластеров: " + target.size(), target);
