@@ -22,8 +22,8 @@ public class PageService {
 
     private final VkUserProperty2OptionConverter vkUserProperty2OptionConverter;
     private final ClusteringService clusteringService;
-    private final ClusteringConditionModel2ClusteringRequestConverter clusteringConditionModel2ClusteringRequestConverter;
-    private final ClusteringResponse2ClusteringModelConverter clusteringResponse2ClusteringModelConverter;
+    private final ClusteringConditionModel2ClusteringRequestConverter requestConverter;
+    private final ClusteringResponse2ClusteringModelConverter modelConverter;
 
     public List<Option> getPropertyOptions() {
         return Arrays.stream(VkUserProperty.values())
@@ -32,8 +32,8 @@ public class PageService {
     }
 
     public ClusteringModel clustering(ClusteringConditionModel conditionModel) {
-        ClusteringRequest clusteringRequest = clusteringConditionModel2ClusteringRequestConverter.convert(conditionModel);
+        ClusteringRequest clusteringRequest = requestConverter.convert(conditionModel);
         ClusteringResponse clusteringResponse = clusteringService.kMeans(clusteringRequest);
-        return clusteringResponse2ClusteringModelConverter.convert(clusteringResponse);
+        return modelConverter.convert(clusteringRequest, clusteringResponse);
     }
 }

@@ -39,6 +39,7 @@ public class ClusteringService {
 
     private Set<ClusterRecord> getClusterRecords(ClusteringRequest request) {
         List<VkUser> users = request.isTest() ? getTestVkUsers(request) : getVkUsers(request);
+        request.setVkUsers(users);
         return users.stream()
                 .map(u -> clusterRecordConverter.convert(u, request.getProperties()))
                 .collect(Collectors.toSet());
