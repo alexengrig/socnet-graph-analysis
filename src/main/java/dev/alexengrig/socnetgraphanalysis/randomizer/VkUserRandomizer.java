@@ -17,41 +17,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VkUserRandomizer {
 
+    private static final List<Integer> RELIGION_IDS = List.of(167, 102, 101, 107, 124, 129, 139, 200, 201);
+
     private final Randomizer randomizer;
-    private final FirstNameRandomizer firstNameRandomizer;
     private final LastNameRandomizer lastNameRandomizer;
-
-    public VkUser randomVkUser(Integer id, String firstName, String lastName, int sex) {
-
-        int friendsCount = randomizer.randomInt(0, 1000);
-        return VkUser.builder()
-                .id(id)
-                .firstName(firstName)
-                .lastName(lastName)
-                .age(randomizer.randomInt(14, 64))
-                .sex(sex)
-                .city(0)
-                .country(0)
-                .friendStatus(0)
-                .relation(randomizer.randomInt(0, 8))
-                .political(randomizer.randomInt(0, 8))
-                .religion(randomizer.randomInt(0, 8))
-                .lifeMain(randomizer.randomInt(0, 7))
-                .peopleMain(randomizer.randomInt(0, 5))
-                .smoking(randomizer.randomInt(0, 4))
-                .alcohol(randomizer.randomInt(0, 4))
-                .commonFriendsCount(randomizer.randomInt(0, friendsCount))
-                .friendsCount(friendsCount)
-                .followersCount(randomizer.randomInt(0, 1000))
-                .audiosCount(randomizer.randomInt(0, 700))
-                .videosCount(randomizer.randomInt(0, 500))
-                .photosCount(randomizer.randomInt(0, 500))
-                .groupsCount(randomizer.randomInt(0, 100))
-                .albumsCount(randomizer.randomInt(0, 10))
-                .notesCount(randomizer.randomInt(0, 10))
-                .pagesCount(randomizer.randomInt(0, 20))
-                .build();
-    }
+    private final FirstNameRandomizer firstNameRandomizer;
+    private final CityRandomizer cityRandomizer;
+    private final CountryRandomizer countryRandomizer;
 
     public List<VkUser> randomVkUsers(int count) {
         List<Man> men = getMen(count);
@@ -79,15 +51,52 @@ public class VkUserRandomizer {
         boolean isMale = randomizer.randomBoolean();
         String firstName = isMale ? firstNameRandomizer.randomMale() : firstNameRandomizer.randomFemale();
         String lastName = isMale ? lastNameRandomizer.randomMale() : lastNameRandomizer.randomFemale();
-        return new Man(firstName, lastName, isMale);
+        return new Man(isMale, firstName, lastName);
+    }
+
+    private VkUser randomVkUser(Integer id, String firstName, String lastName, int sex) {
+        int friendsCount = randomizer.randomInt(1, 1000);
+        CountryRandomizer.Country country = countryRandomizer.randomCountry();
+        CityRandomizer.City city = cityRandomizer.randomCity(country);
+        return VkUser.builder()
+                .id(id)
+                .accessed(true)
+                .firstName(firstName)
+                .lastName(lastName)
+                .age(randomizer.randomInt(14, 64))
+                .sex(sex)
+                .country(country.getId())
+                .countryName(country.getName())
+                .city(city.getId())
+                .cityName(city.getName())
+                .friendStatus(randomizer.randomInt(0, 3))
+                .relation(randomizer.randomInt(0, 8))
+                .political(randomizer.randomInt(0, 9))
+                .religion(randomizer.randomOfList(RELIGION_IDS))
+                .lifeMain(randomizer.randomInt(0, 8))
+                .peopleMain(randomizer.randomInt(0, 6))
+                .smoking(randomizer.randomInt(0, 5))
+                .alcohol(randomizer.randomInt(0, 5))
+                .commonFriendsCount(randomizer.randomInt(0, friendsCount))
+                .friendsCount(friendsCount)
+                .followersCount(randomizer.randomInt(0, 1000))
+                .audiosCount(randomizer.randomInt(0, 700))
+                .videosCount(randomizer.randomInt(0, 500))
+                .photosCount(randomizer.randomInt(0, 500))
+                .groupsCount(randomizer.randomInt(0, 100))
+                .albumsCount(randomizer.randomInt(0, 10))
+                .notesCount(randomizer.randomInt(0, 10))
+                .pagesCount(randomizer.randomInt(0, 20))
+                .build();
     }
 
     @Data
     @AllArgsConstructor
     private static class Man {
+
+        private boolean male;
         private String firstName;
         private String lastName;
-        private boolean male;
 
         public String getName() {
             return firstName + " " + lastName;
