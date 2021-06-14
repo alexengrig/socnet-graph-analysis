@@ -55,8 +55,8 @@ public class ClusteringService {
 
     private List<VkUser> getVkUsers(ClusteringRequest request) {
         String vkUserId = request.getVkUserId();
-        VkUser user = vkUserService.getUserById(request.getCode(), vkUserId).orElseThrow();
-        List<VkUser> friends = vkUserService.getUserFriendsById(request.getCode(), user.getId());
+        VkUser user = vkUserService.getUserById(request.getCode(), vkUserId, request.getProperties()).orElseThrow();
+        List<VkUser> friends = vkUserService.getUserFriendsById(request.getCode(), user.getId(), request.getProperties());
         List<VkUser> users = new ArrayList<>(1 + friends.size());
         users.add(user);
         users.addAll(friends);
