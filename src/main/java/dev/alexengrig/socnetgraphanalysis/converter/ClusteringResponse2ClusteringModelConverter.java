@@ -24,7 +24,7 @@ public class ClusteringResponse2ClusteringModelConverter {
                         .map(vkUserProperty2OptionConverter::convert)
                         .collect(Collectors.toList()))
                 .table(vkUserTableConverter.convert(request))
-                .cluster(clusterConverter.convert(response.getClusters()))
+                .cluster(clusterConverter.convert(request, response.getClusters()))
                 .build();
     }
 }
