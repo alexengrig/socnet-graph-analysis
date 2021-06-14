@@ -11,18 +11,23 @@
 </head>
 <body class="p-5">
 <div>
-    <form action="#" class="container" method="post" name="condition" th:action="@{/clustering(code=${code}, test=${test}, count=${count})}">
+    <form action="#" class="container" method="post" name="condition"
+          th:action="@{/clustering(code=${code}, test=${test}, count=${count})}">
         <h1 class="mb-4">Кластеризация пользователей ВКонтакте</h1>
         <div class="row">
             <div class="mb-3 col-5">
                 <label class="form-label" for="vkUserId">Идентификатор пользователя</label>
                 <input class="form-control" id="vkUserId" name="vkUserId" required/>
-                <div class="form-text" id="vkUserIdHelp">https://vk.com/<b>это_идентификатор_пользователя</b>, например, <b>id1</b> или <b>durov</b>
+                <div class="form-text" id="vkUserIdHelp">https://vk.com/<b>это_идентификатор_пользователя</b>, например,
+                    <b>id1</b> или <b>durov</b>
                 </div>
             </div>
             <div class="mb-3 col-4">
                 <label class="form-label" for="numberOfClusters">Кол-во кластеров</label>
-                <input class="form-control" id="numberOfClusters" name="numberOfClusters" required type="number"/>
+                <div class="input-group">
+                    <input class="form-control" id="numberOfClusters" name="numberOfClusters" type="number"/>
+                    <input class="btn btn-outline-primary" name="action" type="submit" value="Подобрать"/>
+                </div>
             </div>
         </div>
         <label class="form-label">Свойства для кластеризации</label>

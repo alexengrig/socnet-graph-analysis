@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>Socnet-graph-analysis | Clustering</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <link th:href="@{webjars/bootstrap/css/bootstrap.min.css} " th:rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/chart.css}">
+</head>
+<body class="p-5">
+<div class="container">
+    <h1 class="mb-4">Подбор кол-ва кластеров</h1>
+    <p>
+        Выбирайте кол-во кластеров, где виден скачок суммы квадратов ошибок,
+        относительно предыдущего и следующего кол-ва кластеров.
+    </p>
+    <canvas height="400" id="chart" width="400"></canvas>
+</div>
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script th:src="@{/js/chart.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    window.onload = function () {
+        var ys = /*[[${elbow}]]*/ {};
+        createChart(ys, 'chart');
+    }
+</script>
+</body>
+</html>
