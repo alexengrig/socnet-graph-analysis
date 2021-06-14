@@ -33,6 +33,8 @@ public class VkUserConverter implements Converter<GetResponse, VkUser> {
                 .birthday(source.getBdate())
                 .age(getAge(source.getBdate()))
                 .accessed(hasAccess(source))
+                .cityName(getString(source.getCity(), City::getTitle))
+                .countryName(getString(source.getCountry(), Country::getTitle))
                 .sex(getInteger(source.getSex(), Sex::ordinal))
                 .city(getInteger(source.getCity(), City::getId))
                 .country(getInteger(source.getCountry(), Country::getId))
@@ -78,6 +80,14 @@ public class VkUserConverter implements Converter<GetResponse, VkUser> {
 
     private String getString(String value) {
         return value == null ? "" : value;
+    }
+
+    private <T> String getString(T object, Function<T, String> getter) {
+        if (object == null) {
+            return "";
+        }
+        String value = getter.apply(object);
+        return getString(value);
     }
 
     private <T> Integer getInteger(T object, Function<T, Integer> getter) {
