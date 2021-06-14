@@ -5,6 +5,8 @@
         <option name="SPRING_BOOT_MAIN_CLASS"
                 value="dev.alexengrig.socnetgraphanalysis.SocnetGraphAnalysisApplication"/>
         <option name="ALTERNATIVE_JRE_PATH"/>
+        <option name="SHORTEN_COMMAND_LINE" value="NONE"/>
+        <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources"/>
         <method v="2">
             <option name="Make" enabled="true"/>
         </method>
