@@ -31,6 +31,11 @@ function createTree(root, elementId) {
     node.append("circle")
         .attr("r", 4.5);
     node.append("text")
+        .attr("data-bs-toggle", "tooltip")
+        .attr("data-bs-placement", "top")
+        .attr("title", function (d) {
+            return d.details;
+        })
         .attr("dy", ".31em")
         .attr("text-anchor", function (d) {
             return d.x < 180 ? "start" : "end";
@@ -39,7 +44,7 @@ function createTree(root, elementId) {
             return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)";
         })
         .text(function (d) {
-            return d.name;
+            return d.label;
         });
     d3.select(self.frameElement).style("height", diameter - 150 + "px");
 }

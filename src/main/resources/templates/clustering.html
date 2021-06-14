@@ -10,21 +10,90 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/tree.css}">
 </head>
-<body>
-<div id="cluster"></div>
+<body class="p-5">
+<h1 class="mb-4">Результат кластеризации пользователей ВКонтакте</h1>
+<h2 class="mb-4">Условия кластеризации</h2>
+<div class="row">
+    <div class="mb-3 col-5">
+        <label class="form-label" for="vkUserId">Идентификатор пользователя</label>
+        <input class="form-control"
+               disabled
+               id="vkUserId"
+               th:value="${clustering.vkUserId}"
+        />
+    </div>
+    <div class="mb-3 col-4">
+        <label class="form-label" for="numberOfClusters">Кол-во кластеров</label>
+        <input class="form-control"
+               disabled
+               id="numberOfClusters"
+               th:value="${clustering.numberOfClusters}"
+               type="number"
+        />
+    </div>
+</div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button aria-controls="cluster-view" aria-selected="false" class="nav-link" data-bs-target="#cluster-view"
+                data-bs-toggle="tab"
+                id="cluster-view-tab" role="tab" type="button"
+        >
+            Кластер
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button aria-controls="table-view" aria-selected="true" class="nav-link active" data-bs-target="#table-view"
+                data-bs-toggle="tab" id="table-view-tab" role="tab" type="button"
+        >
+            Таблица
+        </button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div aria-labelledby="cluster-view-tab" class="tab-pane fade" id="cluster-view" role="tabpanel">
+        <div id="cluster"></div>
+    </div>
+    <div aria-labelledby="table-view-tab" class="tab-pane fade show active" id="table-view" role="tabpanel">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" th:each="header : ${clustering.table.headers}" th:text="${header}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row : ${clustering.table.rows}">
+                <th scope="row" th:each="cell : ${row}" th:text="${cell}"></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <script charset="utf-8" src="https://d3js.org/d3.v3.min.js"></script>
 <script th:src="@{/js/tree.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:inline="javascript">
+    function drawTree(root) {
+        createTree(root, '#cluster')
+    }
+
+    function initTooltip() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    }
+
     window.onload = function () {
         console.log('Started!');
 
         var root = /*[[${clustering.cluster}]]*/ {};
+        drawTree(root);
 
-        createTree(root, '#cluster')
+        initTooltip()
 
         console.log('Finished!');
     }
 </script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>
