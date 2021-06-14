@@ -11,8 +11,8 @@ import java.util.List;
 public class CountryRandomizer {
 
     public static final Country RUSSIA = new Country(1, "Россия");
-    public static final Country UKRAINE = new Country(10, "Украина");
-    public static final Country BELARUS = new Country(20, "Беларусь");
+    public static final Country UKRAINE = new Country(2, "Украина");
+    public static final Country BELARUS = new Country(3, "Беларусь");
 
     private static final List<Country> COUNTRIES = List.of(
             RUSSIA,

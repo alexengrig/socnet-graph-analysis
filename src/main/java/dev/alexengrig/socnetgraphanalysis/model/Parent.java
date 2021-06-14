@@ -9,8 +9,8 @@ public class Parent extends Node {
 
     private final List<Node> children;
 
-    public Parent(String name, List<Node> children) {
-        super(name, name);
+    public Parent(String name, String detail, List<Node> children) {
+        super(name, detail);
         this.children = children;
     }
 }

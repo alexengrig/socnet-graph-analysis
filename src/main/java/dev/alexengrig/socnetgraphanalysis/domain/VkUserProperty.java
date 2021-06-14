@@ -38,6 +38,15 @@ public enum VkUserProperty {
     private final String label;
     private final Function<VkUser, Double> getter;
 
+    public static VkUserProperty valueByLabel(String label) {
+        for (VkUserProperty property : values()) {
+            if (property.getLabel().equals(label)) {
+                return property;
+            }
+        }
+        throw new IllegalArgumentException("No VkUserProperty with label: " + label);
+    }
+
     public Double get(VkUser vkUser) {
         return getter.apply(vkUser);
     }
