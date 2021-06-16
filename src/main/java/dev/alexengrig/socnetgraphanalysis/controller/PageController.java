@@ -56,7 +56,6 @@ public class PageController {
     }
 
     private String getElbow(ClusteringConditionModel condition, Model model) {
-        pageService.clustering(condition);
         model.addAttribute("elbow", pageService.elbow(condition));
         return "elbow";
     }
